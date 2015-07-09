@@ -11,6 +11,8 @@ CONST_REST_PROTOCOL = 'http'
 CONST_REST_PORT = '8080'
 CONST_TIMEZONE = 'Australia/Brisbane'
 CONST_TIMEZONE_RPC = '<rpc> <edit-config> <target> <candidate/> </target> <config> <configuration> <system> <time-zone>' + CONST_TIMEZONE + '</host-name> </system> </configuration> </config> </edit-config> </rpc>'
+COMMIT_RPC = 'commit/'
+SET_DATE_NTP_RPC = 'request-set-date-ntp'
 CONST_NTP_SERVERS = '1.2.3.4'
 CONST_TIME_HEADER = 'rpc?stop-on-error=1 -u ":" -d 
 CONST_HEADERS = {'Content-Type': 'application/xml', 'Accept': 'application/xml'}
@@ -40,7 +42,10 @@ for hostAddress in hostsfile:
 		sys.stdout.write('.')
 		sys.stdout.flush()
 		
-        device_url = CONST_REST_PROTOCOL + '://' + str(hostAddress) + ':' + CONST_REST_PORT + '/rpc/' + CONST_COMMAND
+        set_timezone_url = CONST_REST_PROTOCOL + '://' + str(hostAddress) + ':' + CONST_REST_PORT + '/rpc/' + CONST_COMMAND
+        set_ntp_server_url = ''
+        commit_url = CONST_REST_PROTOCOL + '://' + str(hostAddress) + ':' + CONST_REST_PORT + '/rpc/' + COMMIT_RPC
+        commit = requests.get(
 	else:	
 		sys.stdout.write("x")
 		sys.stdout.flush()
@@ -50,11 +55,3 @@ for hostAddress in hostsfile:
 get_system_information = requests.get('http://10.0.0.81:8080/rpc/get-system-information', auth=('root', 'juniper1'))
 
 print get_system_information.text
-
-
-
-sys.stdout.write('\n')
-for device in deviceInventory:
-	line = device["IP Address"] + ',' + device["Serial Number"] + ',' + device ["Model"] + '\n'
-	sys.stdout.write(line)
-	sys.stdout.flush()
