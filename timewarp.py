@@ -45,14 +45,20 @@ for hostAddress in hostsfile:
         device_rpc_url = REST_PROTOCOL + '://' + hostIP + ':' + REST_PORT + '/rpc'
         if requests.post(device_rpc_url, auth=(username, password), headers=HEADERS, data=TIMEZONE_RPC).status_code==200:
             print "Applied Timezone Configuration to " + hostIP
+        else:
+            print "Timezone configuration failed on " + hostIP
         if requests.post(device_rpc_url, auth=(username, password), headers=HEADERS, data=NTP_RPC).status_code==200:
             print "Applied NTP Configuration to " + hostIP
+        else:
+            print "NTP Configuration failed on " + hostIP
         if requests.post(device_rpc_url + COMMIT_RPC, auth=(username, password), headers=HEADERS).status_code==200:
             print "Committed configuration to " + hostIP
+        else:
+            print "Configuration commit failed on " + hostIP
         if requests.post(device_rpc_url + SET_DATE_NTP_RPC, auth=(username, password), headers=HEADERS).status_code==200:
             print "Synchronised NTP on node " + hostIP
+        else:
+            print "NTP synchronisation failed on node " + hostIP
         print "\n"
     else:
-        sys.stdout.write("x")
-        sys.stdout.flush()
-        deviceInventory.append({"IP Address":str(hostAddress).rstrip('\n'),"Serial Number":"IP Address Error","Model":"N/A"})
+        print "Invalid host IP address: "+ hostIP
