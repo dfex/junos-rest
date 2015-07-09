@@ -40,16 +40,18 @@ inetRegex = re.compile("^([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-1][0-9]|22[0-3])\.([0
 sys.stdout.flush()
 hostsfile = open(str(sys.argv[1]),'r')
 for hostAddress in hostsfile:
-    if inetRegex.match(str(hostAddress)):
-        device_rpc_url = REST_PROTOCOL + '://' + hostAddress.rstrip('\n') + ':' + REST_PORT + '/rpc'
+    hostIP = hostAddress.rstrip('\n')
+    if inetRegex.match(hostIP):
+        device_rpc_url = REST_PROTOCOL + '://' + hostIP + ':' + REST_PORT + '/rpc'
         if requests.post(device_rpc_url, auth=(username, password), headers=HEADERS, data=TIMEZONE_RPC).status_code==200:
-            print "Applied Timezone Configuration to " + hostAddress
+            print "Applied Timezone Configuration to " + hostIP
         if requests.post(device_rpc_url, auth=(username, password), headers=HEADERS, data=NTP_RPC).status_code==200:
-            print "Applied NTP Configuration to " + hostAddress
+            print "Applied NTP Configuration to " + hostIP
         if requests.post(device_rpc_url + COMMIT_RPC, auth=(username, password), headers=HEADERS).status_code==200:
-            print "Committed configuration to " + hostAddress   
+            print "Committed configuration to " + hostIP
         if requests.post(device_rpc_url + SET_DATE_NTP_RPC, auth=(username, password), headers=HEADERS).status_code==200:
-            print "Synchronised NTP on node " + hostAddress                    
+            print "Synchronised NTP on node " + hostIP
+        print "\n"
     else:
         sys.stdout.write("x")
         sys.stdout.flush()

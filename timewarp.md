@@ -1,0 +1,22 @@
+timewarp.py
+
+Given a list of Junos device IPs, timewarp will go out and set the Timezone and an NTP server, then commit the configuration and synchronise the clock source (```set date ntp```) using the Junos REST API.
+
+```
+$ ./timwarp.py hostlist
+
+Timewarp
+
+Username: root
+Password: *******
+Applied Timezone Configuration to 10.0.0.81
+Applied NTP Configuration to 10.0.0.81
+Committed configuration to 10.0.0.81
+Synchronised NTP on node 10.0.0.81
+
+Applied Timezone Configuration to 10.0.0.82
+Applied NTP Configuration to 10.0.0.82
+Committed configuration to 10.0.0.82
+Synchronised NTP on node 10.0.0.82
+
+```
