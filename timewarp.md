@@ -1,6 +1,6 @@
 timewarp.py
 
-Given a list of Junos device IPs, timewarp will go out and set the Timezone and an NTP server, then commit the configuration and synchronise the clock source (```set date ntp```) using the Junos REST API.
+Given a list of Junos device IPs, timewarp will set the Timezone and an NTP server, then commit the configuration and synchronise the clock source (```set date ntp```) using the Junos REST API.
 
 Requires Junos 15.1R1.8 or later, and:
 
