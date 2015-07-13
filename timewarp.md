@@ -6,7 +6,9 @@ Requires Junos 15.1R1.8 or later, and:
 
 ```set system services rest http port 8080```
 
-configured.
+configured on the router.
+
+The python lib ```requests``` is also required.
 
 ```
 $ ./timwarp.py hostlist
